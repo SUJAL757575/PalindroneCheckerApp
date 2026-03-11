@@ -3,42 +3,55 @@ import java.util.Stack;
 
 /**
  * ===========================================================================
- * MAIN CLASS - UseCase12PalindromeCheckerApp
+ * MAIN CLASS - UseCase13PalindromeCheckerApp
  * ===========================================================================
- * * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * * Use Case 13: Performance Comparison
  * * Description:
- * This class demonstrates how different palindrome validation algorithms
- * can be selected dynamically at runtime using the Strategy Design Pattern.
+ * This class measures and compares the execution performance
+ * of palindrome validation algorithms using System.nanoTime().
  */
 public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Input text: ");
+        System.out.print("Input text for benchmarking: ");
         String input = scanner.nextLine();
 
-        // We can inject different strategies here
+        // Initialize the strategy
         PalindromeStrategy strategy = new StackStrategy();
 
-        // The context executes the selected algorithm
-        boolean isPalindrome = strategy.isValid(input);
+        // 1. Capture Start Time (in nanoseconds)
+        long startTime = System.nanoTime();
 
-        System.out.println("Validation Result (using Stack Strategy): " + isPalindrome);
+        // 2. Execute the algorithm
+        boolean result = strategy.isValid(input);
+
+        // 3. Capture End Time
+        long endTime = System.nanoTime();
+
+        // 4. Calculate Duration
+        long duration = endTime - startTime;
+
+        // Display results
+        System.out.println("------------------------------------");
+        System.out.println("Algorithm: StackStrategy");
+        System.out.println("Is Palindrome: " + result);
+        System.out.println("Execution Time: " + duration + " ns");
+        System.out.println("------------------------------------");
+
         scanner.close();
     }
 }
 
 /**
- * INTERFACE - PalindromeStrategy
- * Defines a contract for all palindrome checking algorithms.
+ * Strategy Interface (from UC12)
  */
 interface PalindromeStrategy {
     boolean isValid(String input);
 }
 
 /**
- * CLASS - StackStrategy
- * Implements a concrete Stack-based validation strategy.
+ * Concrete Implementation (from UC12)
  */
 class StackStrategy implements PalindromeStrategy {
     @Override
